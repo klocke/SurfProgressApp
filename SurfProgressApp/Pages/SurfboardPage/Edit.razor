@@ -1,0 +1,152 @@
+﻿@page "/surfboard/edit/{id}"
+@inject HttpClient Http
+@inject NotificationService NotificationService
+@inject NavigationManager NavigationManager
+@using SurfProgressAPI.Shared.Models
+
+@if (editBoard != null)
+{
+    <form method="post">
+        <div class="border p-3">
+            <div class="form-group-row">
+                <h2 class="text-info pl-3">Edit Surfboard</h2>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>SurfboardId</label>
+                        </div>
+                        <div class="col-8">
+                            <input disabled class="form-control" @bind="editBoard.SurfboardId" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Length</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" @bind="editBoard.Length" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Width</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" @bind="editBoard.Width" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Thickness</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" @bind="editBoard.Thickness" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Volume</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" @bind="editBoard.Volume" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Fin Setup</label>
+                        </div>
+                        <div class="col-8">
+                            <select class="form-control" @bind="editBoard.FinSetup">
+                                @foreach (Surfboard.FinSetupEnum fs in (Surfboard.FinSetupEnum[])Enum.GetValues(typeof(Surfboard.FinSetupEnum)))
+                                {
+                                    <option value=@fs>@fs</option>
+                                }
+                            </select>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Tail</label>
+                        </div>
+                        <div class="col-8">
+                            <select class="form-control" @bind="editBoard.Tail">
+                                @foreach (Surfboard.TailEnum t in (Surfboard.TailEnum[])Enum.GetValues(typeof(Surfboard.TailEnum)))
+                                {
+                                    <option value=@t>@t</option>
+                                }
+                            </select>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Brand</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" @bind="editBoard.Brand" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Shaper</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" @bind="editBoard.Shaper" />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-8 offset-4 row">
+                            <div class="col">
+                                <input type="button" @onclick="UpdateSurfboard" class="btn btn-info w-100" value="Update" />
+                            </div>
+                            <div class="col">
+                                <a href="/surfboard/index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @* Keep this empty *@
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <label>Loading..</label>
+}
+
+@code {
+    private Surfboard editBoard;
+
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Handle invalid parameter id
+        editBoard = await Http.GetFromJsonAsync<Surfboard>($"/api/Surfboard/{Id}");
+    }
+
+    private async Task UpdateSurfboard()
+    {
+        await Http.PutAsJsonAsync($"/api/Surfboard/{Id}", editBoard);
+
+        NotificationService.Notify(
+    new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Edited Surfboard", Duration = 4000 });
+
+        NavigationManager.NavigateTo("/surfboard/index");
+    }
+}
+

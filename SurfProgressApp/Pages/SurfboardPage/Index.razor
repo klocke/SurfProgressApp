@@ -1,0 +1,122 @@
+﻿@page "/surfboard/index"
+@inject HttpClient Http
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+@using SurfProgressAPI.Shared.Models
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Surfboard List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a href="/surfboard/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> &nbsp; Create New Surfboard
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (surfboards != null)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Surfboard Id
+                    </th>
+                    <th>
+                        Length
+                    </th>
+                    <th>
+                        Width
+                    </th>
+                    <th>
+                        Thickness
+                    </th>
+                    <th>
+                        Volume
+                    </th>
+                    <th>
+                        Fin Setup
+                    </th>
+                    <th>
+                        Tail
+                    </th>
+                    <th>
+                        Brand
+                    </th>
+                    <th>
+                        Shaper
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Surfboard surfboard in surfboards)
+                {
+                    <tr>
+                        <td>@surfboard.SurfboardId</td>
+                        <td>@surfboard.Length</td>
+                        <td>@surfboard.Width</td>
+                        <td>@surfboard.Thickness</td>
+                        <td>@surfboard.Volume</td>
+                        <td>@surfboard.FinSetup</td>
+                        <td>@surfboard.Tail</td>
+                        <td>@surfboard.Brand</td>
+                        <td>@surfboard.Shaper</td>
+
+                        <td class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a href="/surfboard/edit/@surfboard.SurfboardId" class="btn btn-primary mx-2">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" @onclick="@(() => DeleteSurfSession(surfboard.SurfboardId))" class="btn btn-danger mx-2">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+    }
+
+</div>
+
+@code {
+    private List<Surfboard> surfboards;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetSurfboards();
+    }
+
+    private async Task DeleteSurfSession(string surfboardId)
+    {
+        bool result = await DialogService.Confirm("Are you sure?", "Delete Surfboard", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" }) ?? false;
+
+        if (result)
+        {
+            await Http.DeleteAsync($" /api/Surfboard/{surfboardId}");
+
+            // Refresh Table
+            await GetSurfboards();
+
+            NotificationService.Notify(
+                new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "Info", Detail = "Deleted Surf Session", Duration = 4000 });
+        }
+    }
+
+    private async Task GetSurfboards()
+    {
+        surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("api/Surfboard");
+        // Sort by DisplayId
+        surfboards.Sort((x, y) => x.DisplayId.CompareTo(y.DisplayId));
+    }
+}

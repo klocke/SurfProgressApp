@@ -1,0 +1,213 @@
+﻿@page "/surfsession/create"
+@inject HttpClient Http
+@inject NotificationService NotificationService
+@inject NavigationManager NavigationManager
+@using SurfProgressAPI.Shared.Models
+
+<form method="post">
+    <div class="border p-3">
+        <div class="form-group-row">
+            <h2 class="text-info pl-3">Add Surf Session</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-8">
+                        <RadzenDatePicker @bind-Value=@newSession.Date DateFormat="d" Change=@(args => OnChange(args, "DatePicker", "MM/dd/yyyy")) />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Time Of Day</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="@newSession.TimeOfDay">
+                            @foreach (SurfSession.TimeOfDayEnum tod in (SurfSession.TimeOfDayEnum[])Enum.GetValues(typeof(SurfSession.TimeOfDayEnum)))
+                            {
+                                <option value=@tod>@tod</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Location</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="@newSession.Location" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Wave Height</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="@newSession.WaveHeight">
+                            @foreach (SurfSession.WaveHeightEnum wh in (SurfSession.WaveHeightEnum[])Enum.GetValues(typeof(SurfSession.WaveHeightEnum)))
+                            {
+                                <option value=@wh>@wh</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Wave Direction</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="@newSession.WaveDirection">
+                            @foreach (SurfSession.DirectionEnum wd in (SurfSession.DirectionEnum[])Enum.GetValues(typeof(SurfSession.DirectionEnum)))
+                            {
+                                <option value=@wd>@wd</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Wind Direction</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="@newSession.WindDirection">
+                            @foreach (SurfSession.DirectionEnum wd in (SurfSession.DirectionEnum[])Enum.GetValues(typeof(SurfSession.DirectionEnum)))
+                            {
+                                <option value=@wd>@wd</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Wind Speed (knots)</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="@newSession.WindSpeed" type="number" min="0" step="1" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Rating</label>
+                    </div>
+                    <div class="col-8">
+                        <RadzenRating @bind-Value="@newSession.Rating" Change=@(args => OnChangeRating(args, "Rating with 5 stars")) />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Wave Count</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="@newSession.WaveCount" type="number" min="0" step="1" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Surfboard</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="@newSession.SurfboardId">
+                            @if (surfboards != null)
+                            {
+                                foreach (Surfboard s in surfboards)
+                                {
+                                    <option value="@s.SurfboardId">@s.SurfboardId</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="Loading..">Loading..</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Notes</label>
+                    </div>
+                    <div class="col-8">
+                        <RadzenTextArea @bind-Value="@newSession.Notes" Change=@(args => OnChange(args, "TextArea")) />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="button" @onclick="PostSurfSession" class="btn btn-info w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a href="/surfsession/index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    private List<Surfboard> surfboards;
+    private SurfSession newSession = new SurfSession { Date = DateTime.Now };
+
+    IEnumerable<DateTime> dates = new DateTime[] { DateTime.Today.AddDays(-1), DateTime.Today.AddDays(1) };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load surfboards to populate in dropdown menu
+        surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("/api/Surfboard");
+        surfboards.Sort((x, y) => x.DisplayId.CompareTo(y.DisplayId));
+
+        // Init dropdown (TODO: need to test if null)
+        newSession.SurfboardId = surfboards.FirstOrDefault().SurfboardId;
+    }
+
+    private async Task PostSurfSession()
+    {
+        await Http.PostAsJsonAsync("/api/SurfSession", newSession);
+
+        NotificationService.Notify(
+            new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Created New Surf Session", Duration = 4000 });
+
+        NavigationManager.NavigateTo("/surfsession/index");
+    }
+
+    void OnChange(DateTime? value, string name, string format)
+    {
+        Console.WriteLine($"{name} value changed to {value?.ToString(format)}");
+    }
+
+    void OnChangeRating(int value, string name)
+    {
+        Console.WriteLine($"{name} value changed to {value}");
+    }
+
+    void OnChange(string value, string name)
+    {
+        Console.WriteLine($"{name} value changed to {value}");
+    }
+
+    void DateRenderSpecial(DateRenderEventArgs args)
+    {
+        if (dates.Contains(args.Date))
+        {
+            args.Attributes.Add("style", "background-color: #ff6d41; border-color: white;");
+        }
+    }
+
+    void DateRender(DateRenderEventArgs args)
+    {
+        args.Disabled = dates.Contains(args.Date);
+    }
+}

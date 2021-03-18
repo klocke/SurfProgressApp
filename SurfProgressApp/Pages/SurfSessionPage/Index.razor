@@ -1,0 +1,130 @@
+﻿@page "/surfsession/index"
+@inject HttpClient Http
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+@using SurfProgressAPI.Shared.Models
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Surf Session List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a href="/surfsession/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> &nbsp; Create New Surf Session
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (surfSessions != null)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Time Of Day
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Wave Height
+                    </th>
+                    <th>
+                        Wave Direction
+                    </th>
+                    <th>
+                        Wind Direction
+                    </th>
+                    <th>
+                        Wind Speed (knots)
+                    </th>
+                    <th>
+                        Rating
+                    </th>
+                    <th>
+                        Wave Count
+                    </th>
+                    <th>
+                        Surfboard
+                    </th>
+                    <th>
+                        Notes
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (SurfProgressAPI.Shared.Models.SurfSession session in surfSessions)
+                {
+                    <tr>
+                        <td>@session.Date.ToShortDateString()</td>
+                        <td>@session.TimeOfDay</td>
+                        <td>@session.Location</td>
+                        <td>@session.WaveHeight</td>
+                        <td>@session.WaveDirection</td>
+                        <td>@session.WindDirection</td>
+                        <td>@session.WindSpeed</td>
+                        <td>@($"{session.Rating}/5 Stars")</td>
+                        <td>@session.WaveCount</td>
+                        <td>@session.SurfboardId</td>
+                        <td>@session.Notes</td>
+
+                        <td class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a href="/surfsession/edit/@session.SurfSessionId" class="btn btn-primary mx-2">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" @onclick="@(() => DeleteSurfSession(session.SurfSessionId))" class="btn btn-danger mx-2">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+    }
+
+</div>
+
+@code {
+    private List<SurfSession> surfSessions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetSurfSessions();
+    }
+
+    private async Task DeleteSurfSession(int surfSessionId)
+    {
+        bool result = await DialogService.Confirm("Are you sure?", "Delete Surf Session", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" }) ?? false;
+
+        if (result)
+        {
+            await Http.DeleteAsync($" /api/SurfSession/{surfSessionId}");
+
+            // Refresh Table
+            await GetSurfSessions();
+
+            NotificationService.Notify(
+                new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "Info", Detail = "Deleted Surf Session", Duration = 4000 });
+        }
+    }
+
+    private async Task GetSurfSessions()
+    {
+        surfSessions = await Http.GetFromJsonAsync<List<SurfSession>>("/api/SurfSession");
+        // sort by Date
+        surfSessions.Sort((y, x) => x.Date.CompareTo(y.Date));
+    }
+}

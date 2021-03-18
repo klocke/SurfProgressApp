@@ -1,0 +1,46 @@
+[
+  {
+    "surfboardId": "Disco Inferno",
+    "length": "5´4",
+    "width": "18 1/4",
+    "thickness": "2 1/4",
+    "volume": "22.3 L",
+    "finSetup": 0,
+    "tail": 2,
+    "brand": "Sharp Eye",
+    "shaper": "Marcio Zouvi"
+  },
+  {
+    "surfboardId": "five-ten-fish",
+    "length": "5'10",
+    "width": "21 1/8",
+    "thickness": "2 1/2",
+    "volume": "35.7 L",
+    "finSetup": 2,
+    "tail": 5,
+    "brand": "Studer Surfboards",
+    "shaper": "Luke Studer"
+  },
+  {
+    "surfboardId": "rocket9",
+    "length": "5'8",
+    "width": "19 1/4",
+    "thickness": "2 7/16",
+    "volume": "28.4 L",
+    "finSetup": 0,
+    "tail": 4,
+    "brand": "CI Surfboards",
+    "shaper": "Al Merrick"
+  },
+  {
+    "surfboardId": "torq mutliplier",
+    "length": "6'0",
+    "width": "20 3/8",
+    "thickness": "2 1/2",
+    "volume": "33,6 L",
+    "finSetup": 0,
+    "tail": 0,
+    "brand": "Torq",
+    "shaper": "Fabricated"
+  }
+]

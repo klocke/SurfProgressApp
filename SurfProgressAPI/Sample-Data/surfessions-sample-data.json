@@ -1,0 +1,80 @@
+[
+  {
+    "date": "2021-04-20T00:00:00",
+    "timeOfDay": 5,
+    "location": "Beliche",
+    "waveHeight": 2,
+    "waveDirection": 2,
+    "windDirection": 2,
+    "windSpeed": 11,
+    "rating": 4,
+    "waveCount": 13,
+    "surfboardId": "rocket9",
+    "notes": "Good day out."
+  },
+  {
+    "date": "2021-03-05T00:00:00",
+    "timeOfDay": 2,
+    "location": "Scheveningen",
+    "waveHeight": 0,
+    "waveDirection": 6,
+    "windDirection": 2,
+    "windSpeed": 15,
+    "rating": 2,
+    "waveCount": 0,
+    "surfboardId": "rocket9",
+    "notes": "Freezing cold. Wetsuit letting water in."
+  },
+  {
+    "date": "2021-03-05T00:00:00",
+    "timeOfDay": 4,
+    "location": "Scheveningen",
+    "waveHeight": 0,
+    "waveDirection": 6,
+    "windDirection": 2,
+    "windSpeed": 16,
+    "rating": 2,
+    "waveCount": 7,
+    "surfboardId": "rocket9",
+    "notes": "Tried different wetsuit. Way better."
+  },
+  {
+    "date": "2020-11-20T00:00:00",
+    "timeOfDay": 1,
+    "location": "Hoek van Holland",
+    "waveHeight": 1,
+    "waveDirection": 6,
+    "windDirection": 2,
+    "windSpeed": 13,
+    "rating": 3,
+    "waveCount": 6,
+    "surfboardId": "five-ten-fish",
+    "notes": "Went out for 2.5 hrs. Pretty chilly without gloves."
+  },
+  {
+    "date": "2020-10-02T00:00:00",
+    "timeOfDay": 1,
+    "location": "Kerloch, Brittany, France",
+    "waveHeight": 1,
+    "waveDirection": 4,
+    "windDirection": 3,
+    "windSpeed": 23,
+    "rating": 3,
+    "waveCount": 8,
+    "surfboardId": "five-ten-fish",
+    "notes": "Out there by myself."
+  },
+  {
+    "date": "2020-09-17T00:00:00",
+    "timeOfDay": 0,
+    "location": "Hossegor, La Graviere",
+    "waveHeight": 6,
+    "waveDirection": 3,
+    "windDirection": 2,
+    "windSpeed": 16,
+    "rating": 5,
+    "waveCount": 3,
+    "surfboardId": "rocket9",
+    "notes": "Barrels!!"
+  }
+]

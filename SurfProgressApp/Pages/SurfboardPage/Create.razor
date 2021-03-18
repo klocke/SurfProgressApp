@@ -1,0 +1,135 @@
+﻿@page "/surfboard/create"
+@inject HttpClient Http
+@inject NotificationService NotificationService
+@inject NavigationManager NavigationManager
+@using SurfProgressAPI.Shared.Models
+
+<form>
+    <div class="border p-3">
+        <div class="form-group-row">
+            <h2 class="text-info pl-3">Add Surfboard</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>SurfboardId</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.SurfboardId" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Length</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.Length" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Width</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.Width" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Thickness</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.Thickness" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Volume</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.Volume" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Fin Setup</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="newBoard.FinSetup">
+                            @foreach (Surfboard.FinSetupEnum fs in (Surfboard.FinSetupEnum[])Enum.GetValues(typeof(Surfboard.FinSetupEnum)))
+                            {
+                                <option value=@fs>@fs</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Tail</label>
+                    </div>
+                    <div class="col-8">
+                        <select class="form-control" @bind="newBoard.Tail">
+                            @foreach (Surfboard.TailEnum t in (Surfboard.TailEnum[])Enum.GetValues(typeof(Surfboard.TailEnum)))
+                            {
+                                <option value=@t>@t</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Brand</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.Brand" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Shaper</label>
+                    </div>
+                    <div class="col-8">
+                        <input class="form-control" @bind="newBoard.Shaper" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="button" @onclick="PostSurfboard" class="btn btn-info w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a href="/surfboard/index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {   
+    private Surfboard newBoard = new Surfboard {};
+
+    private async Task PostSurfboard()
+    {
+        await Http.PostAsJsonAsync("/api/Surfboard", newBoard);
+
+        NotificationService.Notify(
+            new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Created New Surfboard", Duration = 4000 });
+
+        NavigationManager.NavigateTo("/surfboard/index");
+    }
+}
