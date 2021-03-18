@@ -61,3 +61,7 @@ builder.Services.AddScoped(sp =>
     });
 ```
 Setup multiple startup projects SurfProgressAPI and SurfProgressApp.
+
+# Seed Sample Data
+
+Sample Data can be found in SurfProgressAPI -> Sample-Data. There are two JSON files containing sample data for Surfboards and SurfSessions. They can be seeded using the Swagger UI Post Methods. At this stage every entry needs to be copied one by one.
