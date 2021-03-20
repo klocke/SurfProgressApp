@@ -31,7 +31,7 @@ SurfProgressAPI.Shared: The Model consisting of two classes: Surfboard and SurfS
 
 # Model
 There is two Tables in the database correlating to the two classes in the model, Surfboards and Surfsessions.
-1 SurfSession has 1 Surfboard and 1 Surfboard can be used in many SurfSessions (1 to many relationship).
+1 SurfSession has 1 (or 0) Surfboard and 1 Surfboard can be used in many SurfSessions (1 to many relationship).
 The Property SurfboardId is hereby used as a foreign key to specify the relationship.
 
 ![Tables_new](https://user-images.githubusercontent.com/17553693/111868138-78c21c00-8978-11eb-9123-15fcdd3d240d.png)
