@@ -116,6 +116,7 @@
                     </div>
                     <div class="col-8">
                         <select class="form-control" @bind="CheckSelected">
+                            <option value="@String.Empty">@String.Empty</option>
                             @if (surfboards != null)
                             {
                                 foreach (Surfboard s in surfboards)
@@ -172,8 +173,15 @@
         set
         {
             SelectedDisplayName = value;
-            // Only add id but not object reference. Otherwise it won´t save in db.
-            newSession.SurfboardId = surfboards.Find(s => s.DisplayName == value).SurfboardId;
+
+            if (value != String.Empty)
+            {
+                newSession.SurfboardId = surfboards.Find(s => s.DisplayName == value).SurfboardId;
+            }
+            else
+            {
+                newSession.SurfboardId = null;
+            }
         }
     }
 
@@ -183,9 +191,6 @@
     {
         // Load surfboards to populate in dropdown menu
         surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("/api/Surfboard");
-
-        // init dropdown
-        CheckSelected = surfboards.FirstOrDefault().DisplayName;
     }
 
     private async Task PostSurfSession()

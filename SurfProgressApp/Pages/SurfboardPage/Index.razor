@@ -103,6 +103,15 @@
 
         if (result)
         {
+            // Update references accordingly to point to null.
+            List<SurfSession> updatedSessions = surfboards.Find(s => s.SurfboardId == surfboardId).SurfSessions;
+
+            foreach (SurfSession s in updatedSessions)
+            {
+                s.SurfboardId = null;
+                await Http.PutAsJsonAsync($"/api/SurfSession/{s.SurfSessionId}", s);
+            }
+
             await Http.DeleteAsync($" /api/Surfboard/{surfboardId}");
 
             // Refresh Table

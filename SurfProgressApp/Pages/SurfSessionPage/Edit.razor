@@ -118,6 +118,7 @@
                         </div>
                         <div class="col-8">
                             <select class="form-control" @bind="CheckSelected">
+                                <option value="@String.Empty">@String.Empty</option>
                                 @if (surfboards != null)
                                 {
                                     foreach (Surfboard s in surfboards)
@@ -178,7 +179,15 @@ else
         set
         {
             SelectedDisplayName = value;
-            editSession.SurfboardId = surfboards.Find(s => s.DisplayName == value).SurfboardId;
+
+            if (value != String.Empty)
+            {
+                editSession.SurfboardId = surfboards.Find(s => s.DisplayName == value).SurfboardId;
+            }
+            else
+            {
+                editSession.SurfboardId = null;
+            }
         }
     }
 
@@ -198,7 +207,10 @@ else
         surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("/api/Surfboard");
 
         // init dropdown
-        CheckSelected = editSession.Surfboard.DisplayName;
+        if (editSession.Surfboard != null)
+        {
+            CheckSelected = editSession.Surfboard.DisplayName;
+        }
     }
 
     private async Task UpdateSurfSession()
