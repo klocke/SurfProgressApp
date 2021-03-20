@@ -34,7 +34,7 @@ There is two Tables in the database correlating to the two classes in the model,
 1 SurfSession has 1 Surfboard and 1 Surfboard can be used in many SurfSessions (1 to many relationship).
 The Property SurfboardId is hereby used as a foreign key to specify the relationship.
 
-![relationships](https://user-images.githubusercontent.com/17553693/111615505-1c78c400-87e1-11eb-8884-57e1b901aee7.png)
+![Tables_new](https://user-images.githubusercontent.com/17553693/111868138-78c21c00-8978-11eb-9123-15fcdd3d240d.png)
 
 # Get Started
 
@@ -64,4 +64,4 @@ Setup multiple startup projects SurfProgressAPI and SurfProgressApp.
 
 # Seed Sample Data
 
-Sample Data can be found in SurfProgressAPI -> Sample-Data. There are two JSON files containing sample data for Surfboards and SurfSessions. They can be seeded using the Swagger UI Post Methods. At this stage every entry needs to be copied one by one.
+Sample Data can be found in SurfProgressAPI -> Sample-Data. There are two JSON files containing sample data for Surfboards and SurfSessions. They can be seeded using the Swagger UI Post Methods. POST api/Surfboard/range and POST api/SurfSession/range.
