@@ -44,7 +44,7 @@ namespace SurfProgressAPI.Shared.Models
 
         [Required]
         [ForeignKey("SurfboardId")]
-        public string SurfboardId { get; set; }
+        public int SurfboardId { get; set; }
 
         // 1:n relationship 
         // 1 SurfSession has 1 Surfboard and 1 Surfboard has many SurfSessions

@@ -10,13 +10,11 @@ namespace SurfProgressAPI.Shared.Models
     public class Surfboard
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column(TypeName = "nvarchar(50)")]
-        public string SurfboardId { get; set; }
+        [Column(TypeName = "int")]
+        public int SurfboardId { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column(TypeName ="int")]
-        public int DisplayId { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
+        public string DisplayName { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
         public string Length { get; set; }
@@ -41,6 +39,8 @@ namespace SurfProgressAPI.Shared.Models
 
         [Column(TypeName = "nvarchar(50)")]
         public string Shaper { get; set; }
+
+        public virtual List<SurfSession> SurfSessions { get; set; }
 
         // ENUM DECLARATION
         public enum FinSetupEnum { Thruster, Quad, Twin, Single };

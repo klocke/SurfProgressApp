@@ -1,6 +1,6 @@
 [
   {
-    "surfboardId": "Disco Inferno",
+    "displayName": "Disco Inferno",
     "length": "5´4",
     "width": "18 1/4",
     "thickness": "2 1/4",
@@ -11,7 +11,7 @@
     "shaper": "Marcio Zouvi"
   },
   {
-    "surfboardId": "five-ten-fish",
+    "displayName": "five-ten-fish",
     "length": "5'10",
     "width": "21 1/8",
     "thickness": "2 1/2",
@@ -22,7 +22,7 @@
     "shaper": "Luke Studer"
   },
   {
-    "surfboardId": "rocket9",
+    "displayName": "rocket9",
     "length": "5'8",
     "width": "19 1/4",
     "thickness": "2 7/16",
@@ -33,7 +33,7 @@
     "shaper": "Al Merrick"
   },
   {
-    "surfboardId": "torq mutliplier",
+    "displayName": "torq mutliplier",
     "length": "6'0",
     "width": "20 3/8",
     "thickness": "2 1/2",

@@ -115,12 +115,12 @@
                         <label>Surfboard</label>
                     </div>
                     <div class="col-8">
-                        <select class="form-control" @bind="@newSession.SurfboardId">
+                        <select class="form-control" @bind="CheckSelected">
                             @if (surfboards != null)
                             {
                                 foreach (Surfboard s in surfboards)
                                 {
-                                    <option value="@s.SurfboardId">@s.SurfboardId</option>
+                                    <option value="@s.DisplayName">@s.DisplayName</option>
                                 }
                             }
                             else
@@ -159,7 +159,23 @@
 
 @code {
     private List<Surfboard> surfboards;
+    // TODO: Warning, instead of creating new surfboard object should use an existing one
     private SurfSession newSession = new SurfSession { Date = DateTime.Now };
+
+    private string SelectedDisplayName { get; set; }
+    private string CheckSelected
+    {
+        get
+        {
+            return SelectedDisplayName;
+        }
+        set
+        {
+            SelectedDisplayName = value;
+            // Only add id but not object reference. Otherwise it won´t save in db.
+            newSession.SurfboardId = surfboards.Find(s => s.DisplayName == value).SurfboardId;
+        }
+    }
 
     IEnumerable<DateTime> dates = new DateTime[] { DateTime.Today.AddDays(-1), DateTime.Today.AddDays(1) };
 
@@ -167,10 +183,9 @@
     {
         // Load surfboards to populate in dropdown menu
         surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("/api/Surfboard");
-        surfboards.Sort((x, y) => x.DisplayId.CompareTo(y.DisplayId));
 
-        // Init dropdown (TODO: need to test if null)
-        newSession.SurfboardId = surfboards.FirstOrDefault().SurfboardId;
+        // init dropdown
+        CheckSelected = surfboards.FirstOrDefault().DisplayName;
     }
 
     private async Task PostSurfSession()

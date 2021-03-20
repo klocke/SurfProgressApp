@@ -9,7 +9,7 @@
     "windSpeed": 11,
     "rating": 4,
     "waveCount": 13,
-    "surfboardId": "rocket9",
+    "surfboardId": 3,
     "notes": "Good day out."
   },
   {
@@ -22,7 +22,7 @@
     "windSpeed": 15,
     "rating": 2,
     "waveCount": 0,
-    "surfboardId": "rocket9",
+    "surfboardId": 3,
     "notes": "Freezing cold. Wetsuit letting water in."
   },
   {
@@ -35,7 +35,7 @@
     "windSpeed": 16,
     "rating": 2,
     "waveCount": 7,
-    "surfboardId": "rocket9",
+    "surfboardId": 3,
     "notes": "Tried different wetsuit. Way better."
   },
   {
@@ -48,7 +48,7 @@
     "windSpeed": 13,
     "rating": 3,
     "waveCount": 6,
-    "surfboardId": "five-ten-fish",
+    "surfboardId": 2,
     "notes": "Went out for 2.5 hrs. Pretty chilly without gloves."
   },
   {
@@ -61,7 +61,7 @@
     "windSpeed": 23,
     "rating": 3,
     "waveCount": 8,
-    "surfboardId": "five-ten-fish",
+    "surfboardId": 2,
     "notes": "Out there by myself."
   },
   {
@@ -74,7 +74,7 @@
     "windSpeed": 16,
     "rating": 5,
     "waveCount": 3,
-    "surfboardId": "rocket9",
+    "surfboardId": 3,
     "notes": "Barrels!!"
   }
 ]

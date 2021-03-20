@@ -31,6 +31,16 @@ namespace SurfProgressAPI.Controllers
             return CreatedAtAction("GetSurfSessionById", new { id = surfSession.SurfSessionId }, surfSession);
         }
 
+        // POST - CREATE: api/SurfSession/range
+        [HttpPost("range")]
+        public async Task<ActionResult<List<SurfSession>>> PostSurfboards(List<SurfSession> surfSessions)
+        {
+            _db.SurfSessions.AddRange(surfSessions);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction("GetSurfSessions", surfSessions);
+        }
+
         // GET - READ: api/SurfSession
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SurfSession>>> GetSurfSessions()

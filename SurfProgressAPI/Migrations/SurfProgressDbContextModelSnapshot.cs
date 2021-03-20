@@ -38,9 +38,8 @@ namespace SurfProgressAPI.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("SurfboardId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("SurfboardId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TimeOfDay")
                         .IsRequired()
@@ -73,16 +72,16 @@ namespace SurfProgressAPI.Migrations
 
             modelBuilder.Entity("SurfProgressAPI.Shared.Models.Surfboard", b =>
                 {
-                    b.Property<string>("SurfboardId")
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("SurfboardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("DisplayId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FinSetup")
                         .IsRequired()
@@ -115,12 +114,17 @@ namespace SurfProgressAPI.Migrations
             modelBuilder.Entity("SurfProgressAPI.Shared.Models.SurfSession", b =>
                 {
                     b.HasOne("SurfProgressAPI.Shared.Models.Surfboard", "Surfboard")
-                        .WithMany()
+                        .WithMany("SurfSessions")
                         .HasForeignKey("SurfboardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Surfboard");
+                });
+
+            modelBuilder.Entity("SurfProgressAPI.Shared.Models.Surfboard", b =>
+                {
+                    b.Navigation("SurfSessions");
                 });
 #pragma warning restore 612, 618
         }

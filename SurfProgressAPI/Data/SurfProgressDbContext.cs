@@ -12,7 +12,6 @@ namespace SurfProgressAPI.Data
     {
         public SurfProgressDbContext(DbContextOptions<SurfProgressDbContext> options) : base(options)
         {
-
         }
 
         public DbSet<Surfboard> Surfboards { get; set; }
@@ -21,13 +20,6 @@ namespace SurfProgressAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Important otherwise you can´t Update row
-            modelBuilder.Entity<Surfboard>(builder =>
-            {
-                builder.Property(e => e.DisplayId).ValueGeneratedOnAdd()
-                    .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-            });
-
             // TODO: Add JSON Sample data file
 
             //Surfboard[] surfboardData = new Surfboard[] {

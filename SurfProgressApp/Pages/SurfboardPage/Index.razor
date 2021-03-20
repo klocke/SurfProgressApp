@@ -24,7 +24,7 @@
             <thead>
                 <tr>
                     <th>
-                        Surfboard Id
+                        Display Name
                     </th>
                     <th>
                         Length
@@ -57,7 +57,7 @@
                 @foreach (Surfboard surfboard in surfboards)
                 {
                     <tr>
-                        <td>@surfboard.SurfboardId</td>
+                        <td>@surfboard.DisplayName</td>
                         <td>@surfboard.Length</td>
                         <td>@surfboard.Width</td>
                         <td>@surfboard.Thickness</td>
@@ -97,7 +97,7 @@
         await GetSurfboards();
     }
 
-    private async Task DeleteSurfSession(string surfboardId)
+    private async Task DeleteSurfSession(int surfboardId)
     {
         bool result = await DialogService.Confirm("Are you sure?", "Delete Surfboard", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" }) ?? false;
 
@@ -116,7 +116,5 @@
     private async Task GetSurfboards()
     {
         surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("api/Surfboard");
-        // Sort by DisplayId
-        surfboards.Sort((x, y) => x.DisplayId.CompareTo(y.DisplayId));
     }
 }

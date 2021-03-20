@@ -30,6 +30,16 @@ namespace SurfProgressAPI.Controllers
             return CreatedAtAction("GetSurfboard", new { surfboardId = surfboard.SurfboardId }, surfboard);
         }
 
+        // POST - CREATE: api/Surfboard/range
+        [HttpPost("range")]
+        public async Task<ActionResult<List<Surfboard>>> PostSurfboards(List<Surfboard> surfboards)
+        {
+            _db.Surfboards.AddRange(surfboards);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction("GetSurfboard", surfboards);
+        }
+
         // GET - READ: api/Surfboard
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Surfboard>>> GetSurfboard()
@@ -39,7 +49,7 @@ namespace SurfProgressAPI.Controllers
 
         // GET - READ: api/Surfboard/five-ten-fish
         [HttpGet("{id}")]
-        public async Task<ActionResult<Surfboard>> GetSurfboard(string id)
+        public async Task<ActionResult<Surfboard>> GetSurfboard(int id)
         {
             Surfboard surfboard = await _db.Surfboards.FindAsync(id);
 
@@ -53,7 +63,7 @@ namespace SurfProgressAPI.Controllers
 
         // PUT - UPDATE: api/Surfboard/five-ten-fish
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSurfboard(string id, Surfboard surfboard)
+        public async Task<IActionResult> PutSurfboard(int id, Surfboard surfboard)
         {
             if (id != surfboard.SurfboardId)
             {
@@ -83,7 +93,7 @@ namespace SurfProgressAPI.Controllers
 
         // DELETE: api/Surfboard/five-ten-fish
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSurfboard(string id)
+        public async Task<IActionResult> DeleteSurfboard(int id)
         {
             Surfboard surfboard = await _db.Surfboards.FindAsync(id);
             if (surfboard == null)
@@ -97,9 +107,9 @@ namespace SurfProgressAPI.Controllers
             return NoContent();
         }
 
-        private bool SurfboardExists(string id)
+        private bool SurfboardExists(int id)
         {
-            return _db.Surfboards.Any(e => e.SurfboardId == id);
+            return _db.Surfboards.Any(s => s.SurfboardId == id);
         }
 
     }

@@ -117,12 +117,12 @@
                             <label>Surfboard</label>
                         </div>
                         <div class="col-8">
-                            <select class="form-control" @bind="@editSession.SurfboardId">
+                            <select class="form-control" @bind="CheckSelected">
                                 @if (surfboards != null)
                                 {
                                     foreach (Surfboard s in surfboards)
                                     {
-                                        <option value="@s.SurfboardId">@s.SurfboardId</option>
+                                        <option value="@s.DisplayName">@s.DisplayName</option>
                                     }
                                 }
                                 else
@@ -168,6 +168,20 @@ else
     private SurfSession editSession;
     private List<Surfboard> surfboards;
 
+    private string SelectedDisplayName { get; set; }
+    private string CheckSelected
+    {
+        get
+        {
+            return SelectedDisplayName;
+        }
+        set
+        {
+            SelectedDisplayName = value;
+            editSession.SurfboardId = surfboards.Find(s => s.DisplayName == value).SurfboardId;
+        }
+    }
+
     IEnumerable<DateTime> dates = new DateTime[] { DateTime.Today.AddDays(-1), DateTime.Today.AddDays(1) };
 
     [Parameter]
@@ -182,7 +196,9 @@ else
         editSession = await Http.GetFromJsonAsync<SurfSession>($"/api/SurfSession/{SurfSessionId}");
 
         surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("/api/Surfboard");
-        surfboards.Sort((x, y) => x.DisplayId.CompareTo(y.DisplayId));
+
+        // init dropdown
+        CheckSelected = editSession.Surfboard.DisplayName;
     }
 
     private async Task UpdateSurfSession()
