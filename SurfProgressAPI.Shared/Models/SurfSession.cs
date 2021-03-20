@@ -42,9 +42,8 @@ namespace SurfProgressAPI.Shared.Models
         [Column(TypeName = "int")]
         public int WaveCount { get; set; }
 
-        [Required]
         [ForeignKey("SurfboardId")]
-        public int SurfboardId { get; set; }
+        public int? SurfboardId { get; set; }
 
         // 1:n relationship 
         // 1 SurfSession has 1 Surfboard and 1 Surfboard has many SurfSessions
