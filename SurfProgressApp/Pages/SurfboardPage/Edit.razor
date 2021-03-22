@@ -2,6 +2,7 @@
 @inject HttpClient Http
 @inject NotificationService NotificationService
 @inject NavigationManager NavigationManager
+@inject DialogService DialogService
 @using SurfProgressAPI.Shared.Models
 
 @if (editBoard != null)
@@ -105,6 +106,14 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <div class="col-4">
+                            <label>Surf Sessions</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="button" @onclick="OpenDialogLinkSessions" class="btn btn-info w-100" value="Add/ Edit Surf Sessions" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col-8 offset-4 row">
                             <div class="col">
                                 <input type="button" @onclick="UpdateSurfboard" class="btn btn-info w-100" value="Update" />
@@ -133,20 +142,64 @@ else
     [Parameter]
     public string Id { get; set; }
 
+    private List<SurfSession> linkedSessions;
+
     protected override async Task OnInitializedAsync()
     {
+        DialogService.OnClose += CloseDialogLinkSessions;
+
         // TODO: Handle invalid parameter id
         editBoard = await Http.GetFromJsonAsync<Surfboard>($"/api/Surfboard/{Id}");
+        // Deep Copy, so the reference isn´t affected by changes directly.
+        linkedSessions = new List<SurfSession> { };
+        linkedSessions.AddRange(editBoard.SurfSessions);
     }
 
     private async Task UpdateSurfboard()
     {
         await Http.PutAsJsonAsync($"/api/Surfboard/{Id}", editBoard);
 
+        if (linkedSessions != null)
+        {
+            // TODO: Compare old list and new list to either edit or delete references
+
+            List<SurfSession> deleteSurfboardRef = editBoard.SurfSessions.FindAll(x => !linkedSessions.Any(s => s.SurfSessionId == x.SurfSessionId));
+            foreach (SurfSession session in deleteSurfboardRef)
+            {
+                // remove reference
+                session.SurfboardId = null;
+                await Http.PutAsJsonAsync($"/api/SurfSession/{session.SurfSessionId}", session);
+            }
+
+            foreach (SurfSession session in linkedSessions)
+            {
+                session.SurfboardId = editBoard.SurfboardId;
+                await Http.PutAsJsonAsync($"/api/SurfSession/{session.SurfSessionId}", session);
+            }
+        }
+
+        // Check updated board
+        Surfboard checkBoard = await Http.GetFromJsonAsync<Surfboard>($"api/Surfboard/{editBoard.SurfboardId}");
+
         NotificationService.Notify(
     new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Edited Surfboard", Duration = 4000 });
 
         NavigationManager.NavigateTo("/surfboard/index");
+    }
+
+    private void OpenDialogLinkSessions()
+    {
+        DialogService.Open<LinkSurfSessions>("Link Surf Sessions",
+            new Dictionary<string, object> { { "LinkedSessions", linkedSessions } },
+            new DialogOptions() { Width = "1300px", Height = "700px" });
+    }
+
+    private void CloseDialogLinkSessions(dynamic result)
+    {
+        if (result != null && result is List<SurfSession>)
+        {
+            linkedSessions = result;
+        }
     }
 }
 

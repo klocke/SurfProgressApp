@@ -1,0 +1,180 @@
+﻿@page "/surfboard/create/linksurfsessions"
+@inject HttpClient Http
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+@inject NavigationManager NavigationManager
+@using SurfProgressAPI.Shared.Models
+
+<div>
+    @if (surfSessions != null)
+    {
+        @if (surfSessions.Count > 0)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Link
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Time Of Day
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Wave Height
+                        </th>
+                        <th>
+                            Wave Direction
+                        </th>
+                        <th>
+                            Wind Direction
+                        </th>
+                        <th>
+                            Wind Speed (knots)
+                        </th>
+                        <th>
+                            Rating
+                        </th>
+                        <th>
+                            Wave Count
+                        </th>
+                        <th>
+                            Surfboard Display Name
+                        </th>
+                        <th>
+                            Notes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SurfProgressAPI.Shared.Models.SurfSession session in surfSessions)
+                    {
+                    <tr>
+                        <td>
+                            @if (LinkedSessions != null && LinkedSessions.Any(x => x.SurfSessionId == session.SurfSessionId))
+                            {
+                                <RadzenCheckBox Value="true" TValue="bool" Change=@(args => OnChange(args, session)) />
+                            }
+                            else
+                            {
+                                <RadzenCheckBox Value="false" TValue="bool" Change=@(args => OnChange(args, session)) />
+                            }
+                        </td>
+                        <td>@session.Date.ToShortDateString()</td>
+                        <td>@session.TimeOfDay</td>
+                        <td>@session.Location</td>
+                        <td>@session.WaveHeight</td>
+                        <td>@session.WaveDirection</td>
+                        <td>@session.WindDirection</td>
+                        <td>@session.WindSpeed</td>
+                        <td>@($"{session.Rating}/5 Stars")</td>
+                        <td>@session.WaveCount</td>
+
+                        @if (session.Surfboard != null)
+                        {
+                            <td>@session.Surfboard.DisplayName</td>
+                        }
+                        else
+                        {
+                            <td>@String.Empty</td>
+                        }
+
+                        <td>@session.Notes</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group row">
+                <div class="col-8 offset-4 row">
+                    <div class="col">
+                        <input type="button" @onclick="Close" class="btn btn-info w-100" value="Add/ Edit" />
+                    </div>
+                    <div class="col">
+                        <a href="/surfboard/create" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <span>No Surf Sessions found.</span>
+        }
+    }
+    else
+    {
+        <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+    }
+
+
+</div>
+
+@code {
+    private List<SurfSession> surfSessions;
+    [Parameter]
+    public List<SurfSession> LinkedSessions { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        surfSessions = await Http.GetFromJsonAsync<List<SurfSession>>("/api/SurfSession");
+        // sort by Date
+        surfSessions.Sort((y, x) => x.Date.CompareTo(y.Date));
+
+        if (LinkedSessions == null)
+        {
+            LinkedSessions = new List<SurfSession> { };
+        }
+    }
+
+    private async Task OnChange(bool value, SurfSession session)
+    {
+        if (value)
+        {
+            if (session.SurfboardId != null)
+            {
+                // Prompt Dialog to confirm to overwrite Surfboard reference
+                bool result = await DialogService.Confirm(
+                    "Session already has a Surfboard linked to it. Are you sure you want to overwrite?",
+                    "Overwrite Linked Session",
+                    new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" }) ?? false;
+
+                if (result)
+                {
+                    // Need Object reference from other list in order to add.
+                    LinkedSessions.Add(surfSessions.First(x => x.SurfSessionId == session.SurfSessionId));
+                }
+            }
+            else
+            {
+                // Need Object reference from other list in order to add.
+                LinkedSessions.Add(surfSessions.First(x => x.SurfSessionId == session.SurfSessionId));
+            }
+        }
+        else
+        {
+            // Need Object reference from same list in order to remove.
+            LinkedSessions.Remove(LinkedSessions.First(x => x.SurfSessionId == session.SurfSessionId));
+        }
+    }
+
+    private async Task Close()
+    {
+        if (LinkedSessions.Count > 0)
+        {
+            NotificationService.Notify(
+                new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Linked Sessions", Duration = 4000 });
+        }
+        else
+        {
+            NotificationService.Notify(
+                new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "Info", Detail = "No Sessions linked", Duration = 4000 });
+        }
+
+
+        this.DialogService.Close(LinkedSessions);
+    }
+}

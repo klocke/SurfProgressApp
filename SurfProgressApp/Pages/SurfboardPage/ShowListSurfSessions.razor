@@ -1,0 +1,90 @@
+﻿@page "/surfboard/index/showlist/{SurfboardId}"
+@inject HttpClient Http
+@inject DialogService DialogService
+@using SurfProgressAPI.Shared.Models
+
+<div>
+    @if (surfSessions != null)
+    {
+        @if (surfSessions.Count > 0)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Time Of Day
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Wave Height
+                        </th>
+                        <th>
+                            Wave Direction
+                        </th>
+                        <th>
+                            Wind Direction
+                        </th>
+                        <th>
+                            Wind Speed (knots)
+                        </th>
+                        <th>
+                            Rating
+                        </th>
+                        <th>
+                            Wave Count
+                        </th>
+                        <th>
+                            Notes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SurfProgressAPI.Shared.Models.SurfSession session in surfSessions)
+                    {
+                        <tr>
+                            <td>@session.Date.ToShortDateString()</td>
+                            <td>@session.TimeOfDay</td>
+                            <td>@session.Location</td>
+                            <td>@session.WaveHeight</td>
+                            <td>@session.WaveDirection</td>
+                            <td>@session.WindDirection</td>
+                            <td>@session.WindSpeed</td>
+                            <td>@($"{session.Rating}/5 Stars")</td>
+                            <td>@session.WaveCount</td>
+                            <td>@session.Notes</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <span>No matching Sessions found.</span>
+        }
+    }
+    else
+    {
+        <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+    }
+
+
+</div>
+
+@code {
+    [Parameter]
+    public int SurfboardId { get; set; }
+
+    private List<SurfSession> surfSessions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        List<Surfboard> surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("api/Surfboard");
+        surfSessions = surfboards.Find(x => x.SurfboardId == SurfboardId).SurfSessions;
+    }
+
+}

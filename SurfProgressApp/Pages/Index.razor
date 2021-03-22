@@ -3,31 +3,33 @@
 @using System.Globalization
 @using SurfProgressAPI.Shared.Models
 
-<div class="col-6">
-    <h2 class="text-primary">Surfboard Progress Chart</h2>
-</div>
-
-@if (surfSessions != null)
-{
-    <div class="row">
-        <div class="col-md-6 col-sm-12 p-4">
-            <RadzenChart>
-                <RadzenLineSeries Smooth="true" Data="@surfSessions" CategoryProperty="Date" Title="Wave Count" ValueProperty="WaveCount">
-                    <RadzenMarkers MarkerType="MarkerType.Circle" />
-                </RadzenLineSeries>
-                <RadzenCategoryAxis Padding="20" FormatString="{0:MMM.dd}" />
-                <RadzenValueAxis>
-                    <RadzenGridLines Visible="true" />
-                    <RadzenAxisTitle Text="Wave Count" />
-                </RadzenValueAxis>
-            </RadzenChart>
-        </div>
+<div>
+    <div class="col-6">
+        <h2 class="text-primary">Surfboard Progress Chart</h2>
     </div>
-}
-else
-{
-    <label>Loading..</label>
-}
+
+    @if (surfSessions != null)
+    {
+        <div class="row">
+            <div class="col-md-6 col-sm-12 p-4">
+                <RadzenChart>
+                    <RadzenLineSeries Smooth="true" Data="@surfSessions" CategoryProperty="Date" Title="Wave Count" ValueProperty="WaveCount">
+                        <RadzenMarkers MarkerType="MarkerType.Circle" />
+                    </RadzenLineSeries>
+                    <RadzenCategoryAxis Padding="20" FormatString="{0:MMM.dd}" />
+                    <RadzenValueAxis>
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Wave Count" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+            </div>
+        </div>
+    }
+    else
+    {
+        <label>Loading..</label>
+    }
+</div>
 
 
 @code {

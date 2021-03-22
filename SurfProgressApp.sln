@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfProgressAPI", "SurfProg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfProgressApp", "SurfProgressApp\SurfProgressApp.csproj", "{1CBD1AF8-42F9-4792-8D70-2B698FB6EEEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfProgressAPI.Shared", "SurfProgressAPI.Shared\SurfProgressAPI.Shared.csproj", "{2AE5E089-EEC3-459A-A250-2B374389DD0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfProgressAPI.Shared", "SurfProgressAPI.Shared\SurfProgressAPI.Shared.csproj", "{2AE5E089-EEC3-459A-A250-2B374389DD0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

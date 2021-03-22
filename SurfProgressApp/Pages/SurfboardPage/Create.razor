@@ -2,6 +2,7 @@
 @inject HttpClient Http
 @inject NotificationService NotificationService
 @inject NavigationManager NavigationManager
+@inject DialogService DialogService
 @using SurfProgressAPI.Shared.Models
 
 <form>
@@ -103,6 +104,14 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <div class="col-4">
+                        <label>Surf Sessions</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="button" @onclick="OpenDialogLinkSessions" class="btn btn-info w-100" value="Add/ Edit Surf Sessions" />
+                    </div>
+                </div>
+                <div class="form-group row">
                     <div class="col-8 offset-4 row">
                         <div class="col">
                             <input type="button" @onclick="PostSurfboard" class="btn btn-info w-100" value="Create" />
@@ -120,16 +129,51 @@
     </div>
 </form>
 
-@code {   
-    private Surfboard newBoard = new Surfboard {};
+@code {
+    private Surfboard newBoard = new Surfboard { };
+    private List<SurfSession> linkedSessions;
+
+    protected override void OnInitialized()
+    {
+        DialogService.OnClose += CloseDialogLinkSessions;
+    }
 
     private async Task PostSurfboard()
     {
-        await Http.PostAsJsonAsync("/api/Surfboard", newBoard);
+        var response = await Http.PostAsJsonAsync("/api/Surfboard", newBoard);
+        // Update newBoard to include the db created SurfboardId
+        newBoard = await response.Content.ReadFromJsonAsync<Surfboard>();
+
+        if (linkedSessions != null)
+        {
+            foreach (SurfSession session in linkedSessions)
+            {
+                // Update Foreign Keys
+                session.SurfboardId = newBoard.SurfboardId;
+
+                await Http.PutAsJsonAsync($"/api/SurfSession/{session.SurfSessionId}", session);
+            }
+
+        }
 
         NotificationService.Notify(
-            new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Created New Surfboard", Duration = 4000 });
+        new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success", Detail = "Created New Surfboard", Duration = 4000 });
 
         NavigationManager.NavigateTo("/surfboard/index");
+    }
+
+    private void OpenDialogLinkSessions()
+    {
+        DialogService.Open<LinkSurfSessions>("Link Surf Sessions",
+            new Dictionary<string, object> { { "LinkedSessions", linkedSessions } },
+            new DialogOptions() { Width = "1300px", Height = "700px" });
+    }
+
+    private void CloseDialogLinkSessions(dynamic result)
+    {
+        if (result != null && result is List<SurfSession>)
+        {
+            linkedSessions = result;
+        }
     }
 }
