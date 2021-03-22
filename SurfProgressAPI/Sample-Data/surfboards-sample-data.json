@@ -42,5 +42,82 @@
     "tail": 0,
     "brand": "Torq",
     "shaper": "Fabricated"
+  },
+  {
+    "displayName": "Sharpie",
+    "length": "5´9",
+    "width": "18 1/2",
+    "thickness": "2 7/20",
+    "volume": "25 L",
+    "finSetup": 0,
+    "tail": 2,
+    "brand": "Sharp Eye",
+    "shaper": "Marcio Zouvi"
+  },
+  {
+    "displayName": "Foamie",
+    "length": "7'8",
+    "width": "?",
+    "thickness": "?",
+    "volume": "50 L",
+    "finSetup": 0,
+    "tail": 1,
+    "brand": "Olaian (Decathlon)",
+    "shaper": "Jeremy Smith"
+  },
+  {
+    "displayName": "Mini Mal",
+    "length": "7'3",
+    "width": "?",
+    "thickness": "?",
+    "volume": "46 L",
+    "finSetup": 0,
+    "tail": 0,
+    "brand": "BIC",
+    "shaper": "?"
+  },
+  {
+    "displayName": "Softech Mason Twin",
+    "length": "5'6",
+    "width": "21",
+    "thickness": "2 5/8",
+    "volume": "35L",
+    "finSetup": 2,
+    "tail": 5,
+    "brand": "Softech",
+    "shaper": "?"
+  },
+  {
+    "displayName": "Pukas El Loco",
+    "length": "6'4",
+    "width": "22 1/2",
+    "thickness": "3",
+    "volume": "47,56 L",
+    "finSetup": 0,
+    "tail": 2,
+    "brand": "Pukas",
+    "shaper": "Axel Lorentz"
+  },
+  {
+    "displayName": "Pyzel Shadow",
+    "length": "5'10",
+    "width": "18 3/4",
+    "thickness": "2 5/16",
+    "volume": "26,60 L",
+    "finSetup": 0,
+    "tail": 3,
+    "brand": "Pyzel",
+    "shaper": "Jon Pyzel"
+  },
+  {
+    "displayName": "Fred Rubble",
+    "length": "6'4",
+    "width": "19 7/8",
+    "thickness": "2 5/8",
+    "volume": "34.6 L",
+    "finSetup": 0,
+    "tail": 1,
+    "brand": "CI Surfboards",
+    "shaper": "Al Merrick"
   }
 ]

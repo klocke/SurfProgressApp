@@ -1,6 +1,7 @@
 [
   {
-    "date": "2021-04-20T00:00:00",
+    "surfSessionId": 1,
+    "date": "2021-03-20T00:00:00",
     "timeOfDay": 5,
     "location": "Beliche",
     "waveHeight": 2,
@@ -9,7 +10,7 @@
     "windSpeed": 11,
     "rating": 4,
     "waveCount": 13,
-    "surfboardId": 3,
+    "surfboardId": 2,
     "notes": "Good day out."
   },
   {
@@ -22,7 +23,7 @@
     "windSpeed": 15,
     "rating": 2,
     "waveCount": 0,
-    "surfboardId": 3,
+    "surfboardId": 2,
     "notes": "Freezing cold. Wetsuit letting water in."
   },
   {
@@ -35,7 +36,7 @@
     "windSpeed": 16,
     "rating": 2,
     "waveCount": 7,
-    "surfboardId": 3,
+    "surfboardId": 4,
     "notes": "Tried different wetsuit. Way better."
   },
   {
@@ -48,7 +49,7 @@
     "windSpeed": 13,
     "rating": 3,
     "waveCount": 6,
-    "surfboardId": 2,
+    "surfboardId": 3,
     "notes": "Went out for 2.5 hrs. Pretty chilly without gloves."
   },
   {
@@ -61,7 +62,7 @@
     "windSpeed": 23,
     "rating": 3,
     "waveCount": 8,
-    "surfboardId": 2,
+    "surfboardId": 4,
     "notes": "Out there by myself."
   },
   {
@@ -76,5 +77,109 @@
     "waveCount": 3,
     "surfboardId": 3,
     "notes": "Barrels!!"
+  },
+  {
+    "date": "2019-12-24T00:00:00",
+    "timeOfDay": 2,
+    "location": "Westies",
+    "waveHeight": 1,
+    "waveDirection": 0,
+    "windDirection": 4,
+    "windSpeed": 3,
+    "rating": 3,
+    "waveCount": 9,
+    "surfboardId": 29,
+    "notes": "Getting better by the day.\nSo much fun."
+  },
+  {
+    "date": "2019-12-10T00:00:00",
+    "timeOfDay": 0,
+    "location": "Westies",
+    "waveHeight": 0,
+    "waveDirection": 3,
+    "windDirection": 2,
+    "windSpeed": 3,
+    "rating": 1,
+    "waveCount": 2,
+    "surfboardId": 29,
+    "notes": "Choppy"
+  },
+  {
+    "date": "2019-11-16T00:00:00",
+    "timeOfDay": 3,
+    "location": "South Arm, Tasmania",
+    "waveHeight": 1,
+    "waveDirection": 4,
+    "windDirection": 2,
+    "windSpeed": 7,
+    "rating": 4,
+    "waveCount": 6,
+    "surfboardId": 24,
+    "notes": "Fun Weekend"
+  },
+  {
+    "date": "2021-01-14T00:00:00",
+    "timeOfDay": 2,
+    "location": "Maasvlakte",
+    "waveHeight": 2,
+    "waveDirection": 5,
+    "windDirection": 2,
+    "windSpeed": 15,
+    "rating": 4,
+    "waveCount": 9,
+    "surfboardId": 2,
+    "notes": "Barreling"
+  },
+  {
+    "date": "2020-02-28T00:00:00",
+    "timeOfDay": 0,
+    "location": "Mahana Point, Nusa Ceningan",
+    "waveHeight": 3,
+    "waveDirection": 3,
+    "windDirection": 3,
+    "windSpeed": 5,
+    "rating": 5,
+    "waveCount": 20,
+    "surfboardId": 3,
+    "notes": "Insane!"
+  },
+  {
+    "date": "2020-06-16T00:00:00",
+    "timeOfDay": 3,
+    "location": "Hossegor",
+    "waveHeight": 4,
+    "waveDirection": 2,
+    "windDirection": 3,
+    "windSpeed": 9,
+    "rating": 5,
+    "waveCount": 2,
+    "surfboardId": 1,
+    "notes": "Steep and Hollow"
+  },
+  {
+    "date": "2019-10-23T00:00:00",
+    "timeOfDay": 5,
+    "location": "Byron Bay",
+    "waveHeight": 0,
+    "waveDirection": 1,
+    "windDirection": 3,
+    "windSpeed": 11,
+    "rating": 3,
+    "waveCount": 2,
+    "surfboardId": 24,
+    "notes": "First time out"
+  },
+  {
+    "date": "2020-07-15T00:00:00",
+    "timeOfDay": 3,
+    "location": "Wijk aan Zee",
+    "waveHeight": 1,
+    "waveDirection": 5,
+    "windDirection": 3,
+    "windSpeed": 14,
+    "rating": 4,
+    "waveCount": 12,
+    "surfboardId": 2,
+    "notes": "Party waves!!"
   }
 ]
