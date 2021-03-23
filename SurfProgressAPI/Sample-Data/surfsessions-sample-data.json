@@ -88,7 +88,7 @@
     "windSpeed": 3,
     "rating": 3,
     "waveCount": 9,
-    "surfboardId": 29,
+    "surfboardId": 11,
     "notes": "Getting better by the day.\nSo much fun."
   },
   {
@@ -101,7 +101,7 @@
     "windSpeed": 3,
     "rating": 1,
     "waveCount": 2,
-    "surfboardId": 29,
+    "surfboardId": 11,
     "notes": "Choppy"
   },
   {
@@ -114,7 +114,7 @@
     "windSpeed": 7,
     "rating": 4,
     "waveCount": 6,
-    "surfboardId": 24,
+    "surfboardId": 6,
     "notes": "Fun Weekend"
   },
   {
@@ -166,7 +166,7 @@
     "windSpeed": 11,
     "rating": 3,
     "waveCount": 2,
-    "surfboardId": 24,
+    "surfboardId": 6,
     "notes": "First time out"
   },
   {
