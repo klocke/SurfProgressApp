@@ -4,12 +4,12 @@
 With the Web App SurfProgressApp you can keep track of your Surf Progress, Surf Sessions and Surfboards.
 On the homepage/ chartpage you can find a chart indicating your Wave Count (Caught Waves) from your Surf Sessions.
 
-![chart](https://user-images.githubusercontent.com/17553693/111614345-c5262400-87df-11eb-91cc-e225554201f8.png)
+![chart2](https://user-images.githubusercontent.com/17553693/112140875-dfdc0c80-8bd4-11eb-9f26-b17fbbdfb6c4.png)
 
 By navigating to Surfboards on the side panel on the left side, you will get to the Surfboards page.
 Here you can view all your Surfboards in a List, Create a new Surfboard, update an existing Surfboard or delete it.
 
-![surfboardlist](https://user-images.githubusercontent.com/17553693/111614427-e0912f00-87df-11eb-9610-c02824db7768.png)
+![surfboardlist2](https://user-images.githubusercontent.com/17553693/112140989-069a4300-8bd5-11eb-89be-13e6178922f0.png)
 
 ![createsurfboard](https://user-images.githubusercontent.com/17553693/111614473-ebe45a80-87df-11eb-8244-adb25805c3c2.png)
 
