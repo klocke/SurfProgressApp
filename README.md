@@ -8,15 +8,20 @@ On the homepage/ chartpage you can find a chart indicating your Wave Count (Caug
 
 By navigating to Surfboards on the side panel on the left side, you will get to the Surfboards page.
 Here you can view all your Surfboards in a List, Create a new Surfboard, update an existing Surfboard or delete it.
+In addition, you can view all linked Surf Sessions via the grey list button.
 
 ![surfboardlist2](https://user-images.githubusercontent.com/17553693/112140989-069a4300-8bd5-11eb-89be-13e6178922f0.png)
 
-![createsurfboard](https://user-images.githubusercontent.com/17553693/111614473-ebe45a80-87df-11eb-8244-adb25805c3c2.png)
+When creating or editing a Surfboard, you can enter all the details and also Add or Edit Surf Sessions that are linked to the Board.
+
+![createsurfboard3](https://user-images.githubusercontent.com/17553693/112141475-9d66ff80-8bd5-11eb-8fe8-8649115fb363.png)
+
+![linksessions](https://user-images.githubusercontent.com/17553693/112142072-6cd39580-8bd6-11eb-9639-3acbcddc4794.PNG)
 
 By navigating to Surf Sessions on the side panel, you will get to the Surf Sessions page.
 Here you can view all Surf Sessions in a List, Create a new Surf Session, update an existing Surf Session or delete it.
 
-![surfsessionlist](https://user-images.githubusercontent.com/17553693/111614556-061e3880-87e0-11eb-9274-87ffbf05a5ff.png)
+![surfsessionlist2](https://user-images.githubusercontent.com/17553693/112141602-c091af00-8bd5-11eb-8f33-5dd21333e60b.png)
 
 ![editsurfsession](https://user-images.githubusercontent.com/17553693/111614623-1504eb00-87e0-11eb-89ca-31b361d5ff46.png)
 
